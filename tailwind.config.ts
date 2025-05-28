@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import defaultTheme from 'tailwindcss/defaultTheme';
 
 export default {
 	darkMode: ["class"],
@@ -18,6 +19,9 @@ export default {
 			}
 		},
 		extend: {
+      fontFamily: {
+        sans: ['Inter', ...defaultTheme.fontFamily.sans],
+      },
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -52,22 +56,21 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				sidebar: {
-					DEFAULT: 'hsl(var(--sidebar-background))',
-					foreground: 'hsl(var(--sidebar-foreground))',
-					primary: 'hsl(var(--sidebar-primary))',
-					'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-					accent: 'hsl(var(--sidebar-accent))',
-					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-					border: 'hsl(var(--sidebar-border))',
-					ring: 'hsl(var(--sidebar-ring))'
-				}
+        // PRD specific colors for direct use with Tailwind utilities
+        'surface': 'hsl(var(--prd-surface))', // Maps to #FFFFFF
+        'sidebar': 'hsl(var(--prd-sidebar-bg))', // Maps to #E9EBEC
+        'primaryText': 'hsl(var(--prd-primary-text))', // Maps to #212529
+        'secondaryText': 'hsl(var(--prd-secondary-text))', // Maps to #878A99
+        'accentBlue': 'hsl(var(--prd-accent-blue))', // Maps to #1877F2
+        'accentRed': 'hsl(var(--prd-accent-red))', // Maps to #F02849
 			},
 			borderRadius: {
-				lg: 'var(--radius)',
-				md: 'calc(var(--radius) - 2px)',
-				sm: 'calc(var(--radius) - 4px)'
+				lg: 'var(--radius)', // 0.375rem (now same as md by default Tailwind)
+				md: 'calc(var(--radius) - 2px)', // 0.375rem - 2px
+				sm: 'calc(var(--radius) - 4px)'  // 0.375rem - 4px
 			},
+      // Spacing uses Tailwind defaults (4px scale) as per PRD.
+      // Effects (shadows) use Tailwind defaults ('shadow', 'shadow-sm') as per PRD.
 			keyframes: {
 				'accordion-down': {
 					from: {
@@ -92,5 +95,5 @@ export default {
 			}
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
 } satisfies Config;
